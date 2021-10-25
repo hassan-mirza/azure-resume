@@ -25,6 +25,8 @@ namespace HassanMirza.Resume
             updatedItem = item;
             updatedItem.Count += 1;
 
+            log.LogInformation($"New count: ${updatedItem.Count}");
+
             return new HttpResponseMessage(System.Net.HttpStatusCode.OK){
                 Content = new StringContent(JsonConvert.SerializeObject(updatedItem))
             };
