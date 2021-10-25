@@ -1,8 +1,11 @@
-name: CI
+name: deploy front end
+# deploy when push is made from frontend
 
 on:
   push:
-    branches: [master]
+    branches: [main]
+    paths:
+    - 'frontend/*'
 
 jobs:
   build:
@@ -16,7 +19,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         azcliversion: 2.0.72
-        inlineSctip: az storage blob upload-batch --acount-name hmresume --auth-mode key -d '$web' -s .
+        inlineSctipt: az storage blob upload-batch --acount-name hmresume --auth-mode key -d '$web' -s frontend/
   
   #azure logout
     - name: logout
