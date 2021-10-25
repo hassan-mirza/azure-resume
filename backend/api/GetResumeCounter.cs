@@ -20,7 +20,7 @@ namespace HassanMirza.Resume
             [CosmosDB(databaseName:"Resume", collectionName: "counter", Id = "1", ConnectionStringSetting = "HmResumeCosmosDb", PartitionKey = "1")] out Item updatedItem,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation($"C# HTTP trigger function processed a request. Current count: ${item.Count}");
 
             updatedItem = item;
             updatedItem.Count += 1;
