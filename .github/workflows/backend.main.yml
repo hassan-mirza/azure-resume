@@ -1,0 +1,43 @@
+name: deploy backend
+
+on: 
+  push:
+    branches: [main]
+    paths:
+    - 'backend/*'
+
+env:
+  AZURE_FUNCTIONAPP_NAME: HMResumeCounter
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'backend'
+  DOTNET_VERSION: '3.1.0'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Checkout GH Action'
+      uses: actions/checkout@v2
+
+    - name: login to az cli
+      uses: azure/login@v1
+      with: 
+        creds: ${{ secrets.azure_credentials }}
+
+    - name: Setup Dotnet ${{ env.DOTNET_VERSION }} Enviornment
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+  
+    - name: Resolve Project Dependencies using DotNet
+      shell: bash
+      run: |
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/api'
+        dotnet build --configuration Release --output ./output
+        popd
+    
+    - name: Run Azure Functions Action
+      uses: Azure/FUnctions-action@v1
+      id: fa
+      with:
+        app-name: ${{ env.AZURE_FUNCITONAPP_NAME }}
+        package: '${{ env.AXURE_FUNCTIONAPP_PACKAGE_PATH }}/api/output' 
