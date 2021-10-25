@@ -10,7 +10,7 @@ on:
 env:
   AZURE_FUNCTIONAPP_NAME: HMResumeCounter
   AZURE_FUNCTIONAPP_PACKAGE_PATH: 'backend'
-  DOTNET_VERSION: '3.1.20'
+  DOTNET_VERSION: '3.1.120'
 
 jobs:
   build-and-deploy:
