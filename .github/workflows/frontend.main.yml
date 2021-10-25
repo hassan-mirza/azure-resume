@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: azure/login@v1
+      with: 
+        creds: ${{ secrets.azure_credentials }}
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.0.72
+        inlineSctip: az storage blob upload-batch --acount-name hmresume --auth-mode key -d '$web' -s .
+  
+  #azure logout
+    - name: logout
+      run: az logout
+      if : always()
