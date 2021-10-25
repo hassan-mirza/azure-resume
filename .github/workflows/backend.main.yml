@@ -4,8 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-    - 'backend/*'
-    - 'backend/api/*'
+    - 'backend/**'
 
 env:
   AZURE_FUNCTIONAPP_NAME: HMResumeCounter
@@ -37,8 +36,8 @@ jobs:
         popd
     
     - name: Run Azure Functions Action
-      uses: Azure/FUnctions-action@v1
+      uses: Azure/functions-action@v1
       id: fa
       with:
-        app-name: ${{ env.AZURE_FUNCITONAPP_NAME }}
-        package: '${{ env.AXURE_FUNCTIONAPP_PACKAGE_PATH }}/api/output' 
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/api/output' 
