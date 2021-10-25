@@ -20,12 +20,10 @@ namespace HassanMirza.Resume
             [CosmosDB(databaseName:"Resume", collectionName: "counter", Id = "1", ConnectionStringSetting = "HmResumeCosmosDb", PartitionKey = "1")] out Item updatedItem,
             ILogger log)
         {
-            log.LogInformation($"C# HTTP trigger function processed a request. Current count: ${item.Count}");
+            log.LogInformation($"C# HTTP trigger function processed a request.");
 
             updatedItem = item;
             updatedItem.Count += 1;
-
-            log.LogInformation($"New run count: ${updatedItem.Count} ");
 
             return new HttpResponseMessage(System.Net.HttpStatusCode.OK){
                 Content = new StringContent(JsonConvert.SerializeObject(updatedItem))
